@@ -218,7 +218,7 @@ endif
 	$(hide) TARGET_BUILD_TYPE="$(TARGET_BUILD_VARIANT)" \
 			TARGET_BUILD_FLAVOR="$(TARGET_PRODUCT)-$(TARGET_BUILD_VARIANT)" \
 			TARGET_DEVICE="$(TARGET_VENDOR_DEVICE_NAME)" \
-			AOSPB_DEVICE="$(TARGET_DEVICE)" \
+			hazy_DEVICE="$(TARGET_DEVICE)" \
 			PRODUCT_NAME="$(TARGET_VENDOR_PRODUCT_NAME)" \
 			PRODUCT_BRAND="$(PRODUCT_BRAND)" \
 			PRODUCT_DEFAULT_LOCALE="$(call get-default-product-locale,$(PRODUCT_LOCALES))" \
@@ -1838,7 +1838,7 @@ endif
 ifeq ($(WITH_GMS),true)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
 else
-ifneq ($(AOSPB_BUILD),)
+ifneq ($(hazy_BUILD),)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
@@ -1847,7 +1847,7 @@ endif
 
 BOOT_ZIP_FROM_IMAGE_SCRIPT := ./build/tools/releasetools/boot_flash_from_image
 KERNEL_PATH := $(TARGET_KERNEL_SOURCE)/arch/arm/configs/$(TARGET_KERNEL_CONFIG)
-#BOOT_ZIP_OUT_FILE := AOSPB-Kernel-$(DEVICE).zip
+#BOOT_ZIP_OUT_FILE := hazy-Kernel-$(DEVICE).zip
 
 ifeq ($(TARGET_OTA_ASSERT_DEVICE),)
     $(INTERNAL_OTA_PACKAGE_TARGET): override_device := auto
@@ -1883,9 +1883,9 @@ CUSTOM_TARGET_PACKAGE := $(PRODUCT_OUT)/hazy_$(TARGET_PRODUCT)-$(PLATFORM_VERSIO
 .PHONY: otapackage bacon bootzip
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(AOSPB_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(AOSPB_TARGET_PACKAGE) > $(AOSPB_TARGET_PACKAGE).md5sum
-	@echo -e ${CL_CYN}"Package Complete: $(AOSPB_TARGET_PACKAGE)"${CL_RST}
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(hazy_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(hazy_TARGET_PACKAGE) > $(hazy_TARGET_PACKAGE).md5sum
+	@echo -e ${CL_CYN}"Package Complete: $(hazy_TARGET_PACKAGE)"${CL_RST}
 
 bootzip: bootimage
 	$(BOOT_ZIP_FROM_IMAGE_SCRIPT) \
