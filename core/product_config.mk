@@ -180,8 +180,8 @@ include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
 # A hazy build needs only the hazy product makefiles.
-ifneq ($(hazy_BUILD),)
-  all_product_configs := $(shell find device -path "*/$(hazy_BUILD)/hazy.mk")
+ifneq ($(HAZY_BUILD),)
+  all_product_configs := $(shell find device -path "*/$(HAZY_BUILD)/hazy.mk")
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
@@ -192,9 +192,9 @@ else
     # files in the tree.
     all_product_configs := $(get-all-product-makefiles)
   endif # TARGET_BUILD_APPS
-endif # hazy_BUILD
+endif # HAZY_BUILD
 
-ifeq ($(hazy_BUILD),)
+ifeq ($(HAZY_BUILD),)
 # Find the product config makefile for the current product.
 # all_product_configs consists items like:
 # <product_name>:<path_to_the_product_makefile>
